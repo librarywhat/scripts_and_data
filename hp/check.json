@@ -1,0 +1,108 @@
+{
+    "record": {
+      "listen stat": [
+        ".*bind.*:777.*",
+        ".*mode.*http.*",
+        ".*stats.*enable.*",
+        ".*stats.*show-legends.*",
+        ".*stats.*refresh.*30s.*",
+        ".*stats.*uri.*\\/stats.*",
+        ".*stats.*auth.*admin:admin.*",
+        ".*stats.*hide-version.*",
+        ".*stats.*realm.*Haproxy.*Statistics.*"
+      ],
+      "cache rebrain_cache": [
+        ".*total-max-size.*4095.*",
+        ".*max-object-size.*10000.*",
+        ".*max-age.*30.*"
+      ],
+      "frontend rebrain_front": [
+        ".*bind.*:443.*ssl.*crt.*/etc/haproxy/rebrain.pem.*",
+        ".*mode.*http.*",
+        ".*http-request.*set-header.*X-Forwarded-For.*%\\[src\\].*",
+        ".*http-request.*cache-use.*rebrain_cache.*",
+        ".*http-response.*cache-store.*rebrain_cache.*",
+        ".*acl.*url_api.*path_beg.*/api.*",
+        ".*use_backend.*rebrain_api.*if.*url_api.*",
+        ".*acl.*url_lk.*path_beg.*/lk.*",
+        ".*use_backend.*rebrain_lk.*if.*url_lk.*",
+        ".*default_backend.*rebrain_back.*"
+      ],
+      "frontend front_sql": [
+        ".*bind.*:3307.*",
+        ".*mode.*tcp.*",
+        ".*option.*tcplog.*",
+        ".*default_backend.*rebrain_sql.*"
+      ],
+      "backend rebrain_api": [
+        ".*mode.*http.*",
+        ".*balance.*roundrobin.*",
+        ".*option.*prefer-last-server.*",
+        ".*cookie.*REBRAIN.*insert.*",
+        ".*cookie.*REBRAIN.*indirect.*",
+        ".*cookie.*REBRAIN.*nocache.*",
+        ".*server.*rebrain_01_80.*127.0.0.1:80.*check.*",
+        ".*server.*rebrain_01_80.*127.0.0.1:80.*cookie.*",
+        ".*server.*rebrain_01_80.*127.0.0.1:80.*rebrain_01_80.*",
+        ".*server.*rebrain_02_80.*127.0.0.1:80.*check.*",
+        ".*server.*rebrain_02_80.*127.0.0.1:80.*cookie.*",
+        ".*server.*rebrain_02_80.*127.0.0.1:80.*rebrain_02_80.*"
+      ],
+      "backend rebrain_lk": [
+        ".*mode.*http.*",
+        ".*acl.*is_cached.*path_end.*js.*",
+        ".*acl.*is_cached.*path_end.*css.*",
+        ".*acl.*is_cached.*path_end.*php.*",
+        ".*balance.*leastconn.*",
+        ".*http-request.*cache-use.*rebrain_cache.*if.*",
+        ".*http-response.*cache-store.*rebrain_cache.*if.*",
+        ".*server.*rebrain_01_81.*127.0.0.1:81.*check.*",
+        ".*server.*rebrain_01_81.*127.0.0.1:81.*inter.*4.*",
+        ".*server.*rebrain_02_81.*127.0.0.1:81.*check.*",
+        ".*server.*rebrain_02_81.*127.0.0.1:81.*inter.*4.*",
+        ".*server.*rebrain_02_81.*127.0.0.1:81.*maxconn.*80.*"
+      ],
+      "backend rebrain_back": [
+        ".*mode.*http.*",
+        ".*balance.*source.*",
+        ".*cookie.*PHPSESSID.*prefix.*",
+        ".*cookie.*PHPSESSID.*nocache.*",
+        ".*server.*rebrain_01_82.*127.0.0.1:82.*check.*",
+        ".*server.*rebrain_01_82.*127.0.0.1:82.*port.*82.*",
+        ".*server.*rebrain_01_82.*127.0.0.1:82.*inter.*8.*",
+        ".*server.*rebrain_01_82.*127.0.0.1:82.*maxconn.*1100.*",
+        ".*server.*rebrain_01_82.*127.0.0.1:82.*cookie.*s1.*",
+        ".*server.*rebrain_02_82.*127.0.0.1:82.*check.*",
+        ".*server.*rebrain_02_82.*127.0.0.1:82.*port.*82.*",
+        ".*server.*rebrain_02_82.*127.0.0.1:82.*inter.*8.*",
+        ".*server.*rebrain_02_82.*127.0.0.1:82.*maxconn.*1100.*",
+        ".*server.*rebrain_02_82.*127.0.0.1:82.*cookie.*s2.*",
+        ".*server.*rebrain_03_82.*127.0.0.1:82.*check.*",
+        ".*server.*rebrain_03_82.*127.0.0.1:82.*port.*82.*",
+        ".*server.*rebrain_03_82.*127.0.0.1:82.*inter.*8.*",
+        ".*server.*rebrain_03_82.*127.0.0.1:82.*maxconn.*1100.*",
+        ".*server.*rebrain_03_82.*127.0.0.1:82.*cookie.*s3.*"
+      ],
+      "backend rebrain_sql": [
+        ".*balance.*roundrobin.*",
+        ".*option.*mysql-check.*user.*haproxy.*",
+        ".*server.*rebrain_db_1.*127.0.0.1:3306.*check.*",
+        ".*server.*rebrain_db_1.*127.0.0.1:3306.*port.*3306.*",
+        ".*server.*rebrain_db_1.*127.0.0.1:3306.*inter.*2.*",
+        ".*server.*rebrain_db_1.*127.0.0.1:3306.*rise.*1.*",
+        ".*server.*rebrain_db_1.*127.0.0.1:3306.*fall.*2.*",
+        ".*server.*rebrain_db_1.*127.0.0.1:3306.*maxconn.*100.*",
+        ".*server.*rebrain_db_2.*127.0.0.1:3306.*check.*",
+        ".*server.*rebrain_db_2.*127.0.0.1:3306.*port.*3306.*",
+        ".*server.*rebrain_db_2.*127.0.0.1:3306.*inter.*2.*",
+        ".*server.*rebrain_db_2.*127.0.0.1:3306.*rise.*1.*",
+        ".*server.*rebrain_db_2.*127.0.0.1:3306.*fall.*2.*",
+        ".*server.*rebrain_db_2.*127.0.0.1:3306.*maxconn.*100.*"
+      ]
+    },
+    "metadata": {
+      "id": "674791fcad19ca34f8d1984b",
+      "private": false,
+      "createdAt": "2024-11-27T21:41:16.908Z"
+    }
+  }
