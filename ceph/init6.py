@@ -1,3 +1,6 @@
+import os
+os.system("pip3 install -U paramiko")
+
 import json
 import time
 from io import StringIO
