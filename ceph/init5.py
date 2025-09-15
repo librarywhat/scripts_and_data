@@ -259,6 +259,9 @@ if __name__ == "__main__":
     parser.add_argument("server_name", type=str, help="The input string to process")
 
     args = parser.parse_args()
-
+    time.sleep(60)
     print(f"Input string received: {args.server_name}")
+    st = time.monotonic()
     worker(args.server_name)
+    with open('file.txt','w') as f:
+        f.write(str(time.monotonic()-st))
