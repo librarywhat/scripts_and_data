@@ -4,6 +4,8 @@ from io import StringIO
 
 import paramiko
 
+class TimeoutException(Exception):
+    pass
 
 class SSHManager:
     def __init__(self, params: dict):
