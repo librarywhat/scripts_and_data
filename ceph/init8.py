@@ -255,14 +255,14 @@ def worker(server_name: str):
 
 
 if __name__ == "__main__":
-    import argparse
+    # import argparse
 
     # parser = argparse.ArgumentParser(description="Process a single string argument.")
 
     # parser.add_argument("server_name", type=str, help="The input string to process")
 
-    args = parser.parse_args()
-    time.sleep(60)
+    # args = parser.parse_args()
+    time.sleep(30)
     # print(f"Input string received: {args.server_name}")
     st = time.monotonic()
     worker("dev91")
