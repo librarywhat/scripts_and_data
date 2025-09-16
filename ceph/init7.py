@@ -257,14 +257,14 @@ def worker(server_name: str):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Process a single string argument.")
+    # parser = argparse.ArgumentParser(description="Process a single string argument.")
 
-    parser.add_argument("server_name", type=str, help="The input string to process")
+    # parser.add_argument("server_name", type=str, help="The input string to process")
 
     args = parser.parse_args()
     time.sleep(60)
-    print(f"Input string received: {args.server_name}")
+    # print(f"Input string received: {args.server_name}")
     st = time.monotonic()
-    worker(args.server_name)
+    worker("dev91")
     with open('file.txt','w') as f:
         f.write(str(time.monotonic()-st))
